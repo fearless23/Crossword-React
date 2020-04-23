@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Puzzle from "./Puzzle";
+import Words from "./Words";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [start, setStart] = useState(false);
+  const [words, setWords] = useState([]);
+  const getWords = (myWords) => {
+    localStorage.clear();
+    setWords(myWords);
+    setStart(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {!start ? (
+        <Words onSubmit={(myWords) => getWords(myWords)} />
+      ) : (
+        <Puzzle data={words} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
