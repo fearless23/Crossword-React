@@ -1,70 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import WordClue from '../WordClue/WordClue';
+import { useLocalState } from './WordsStateManager';
 import './Words.css';
-
-const foundEmptyText = (arr) => {
-  for (let i = 0; i < arr.length; i++) {
-    const { answer, clue } = arr[i];
-    if (!answer) {
-      return { idx: i, at: 'answer' };
-    }
-    if (!clue) {
-      return { idx: i, at: 'clue' };
-    }
-  }
-  return null;
-};
-
-const useLocalState = () => {
-  const emptyRow = { answer: '', clue: '' };
-  const [words, setWords] = useState([emptyRow]);
-  const [error, setError] = useState({ idx: null, at: null });
-
-  const answerChanged = (answer, idx) => {
-    const prev = [...words];
-    prev[idx] = { answer, clue: words[idx].clue };
-    setWords(prev);
-  };
-
-  const clueChanged = (clue, idx) => {
-    const prev = [...words];
-    prev[idx] = { answer: words[idx].answer, clue };
-    setWords(prev);
-  };
-
-  const deleteRow = (idx) => {
-    const prev = [...words];
-    prev.splice(idx, 1);
-    setWords(prev);
-  };
-
-  const addRow = () => {
-    const xx = foundEmptyText(words);
-    if (xx) {
-      setError(xx);
-      return;
-    }
-    const prev = [...words];
-    prev.push(emptyRow);
-    setWords(prev);
-  };
-
-  const checkData = () => {
-    const xx = foundEmptyText(words);
-    if (xx) setError(xx);
-    return !xx;
-  };
-
-  return {
-    words,
-    answerChanged,
-    clueChanged,
-    addRow,
-    deleteRow,
-    error,
-    checkData,
-  };
-};
 
 const Words = (props) => {
   const {
@@ -105,35 +42,17 @@ const Words = (props) => {
           />
         ))}
 
-        <button onClick={addRow} className="round">
-          +
-        </button>
-        <button onClick={makeData} className="btn">
-          Create Puzzle
-        </button>
+        <div className="buttonGroup">
+          <button onClick={addRow} className="round">
+            +
+          </button>
+          <button onClick={makeData} className="btn">
+            Create Puzzle
+          </button>
+        </div>
       </div>
     </section>
   );
 };
 
 export default Words;
-
-/*
-const inputJSON = [
-  {
-    clue:
-      "that which is established as a rule or model by authority, custom, or general consent",
-    answer: "standard",
-  },
-  { clue: "a machine that computes", answer: "computer" },
-  {
-    clue: "the collective designation of items for a particular purpose",
-    answer: "equipment",
-  },
-  { clue: "an opening or entrance to an inclosed place", answer: "port" },
-  {
-    clue: "a point where two things can connect and interact",
-    answer: "interface",
-  },
-];
-*/

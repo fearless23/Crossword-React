@@ -1,6 +1,3 @@
-.wordsWrapper {
-}
-
 .wordsContainer {
   max-width: 600px;
   margin: 0 auto;
@@ -49,7 +46,7 @@ button.btn {
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: 20px 1fr 3fr 2em;
+  grid-template-columns: 20px 2fr 3fr 2em;
   grid-column-gap: 6px;
   margin-bottom: 6px;
   border-bottom: 1px solid grey;

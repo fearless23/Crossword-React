@@ -19,6 +19,7 @@ const WordClue = (props) => {
   return (
     <div className="wordClueRow">
       <span className="idx">{idx + 1}</span>
+
       <input
         className={isErrorAtAnswer ? 'error' : ''}
         name="answer"
@@ -26,6 +27,7 @@ const WordClue = (props) => {
         placeholder="Type Word"
         onChange={answerChanged}
       ></input>
+
       <input
         name="clue"
         className={isErrorAtClue ? 'error' : ''}
@@ -33,7 +35,8 @@ const WordClue = (props) => {
         placeholder="Type Clue"
         onChange={clueChanged}
       ></input>
-      <button onClick={() => props.deleteRow(idx)}>X</button>
+
+      {idx > 4 && <button onClick={() => props.deleteRow(idx)}>X</button>}
     </div>
   );
 };

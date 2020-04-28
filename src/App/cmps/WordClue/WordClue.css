@@ -1,7 +1,7 @@
 .wordClueRow {
   display: grid;
   align-items: center;
-  grid-template-columns: 20px 1fr 3fr 2em;
+  grid-template-columns: 20px 2fr 3fr 2em;
   grid-column-gap: 6px;
   margin-bottom: 6px;
 }
@@ -11,9 +11,12 @@
 }
 
 .wordClueRow input {
+  width: 100%;
+  display: inline-block;
   padding: 0.8em 1em;
   color: rgba(69, 69, 69, 1);
   border-radius: 4px;
+  border-color: transparent;
 }
 
 .wordClueRow input.error {
