@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import Puzzle from "./Puzzle";
-import Words from "./Words";
-import "./App.css";
+import React, { useState } from 'react';
+import Puzzle from './cmps/Puzzle/Puzzle';
+import Words from './cmps/Words/Words';
 
 const App = () => {
   const [start, setStart] = useState(false);
@@ -12,14 +11,19 @@ const App = () => {
     setStart(true);
   };
 
+  const newGame = () => {
+    localStorage.clear();
+    setStart(false);
+  };
+
   return (
-    <div>
+    <>
       {!start ? (
         <Words onSubmit={(myWords) => getWords(myWords)} />
       ) : (
-        <Puzzle data={words} />
+        <Puzzle data={words} newGame={newGame} />
       )}
-    </div>
+    </>
   );
 };
 

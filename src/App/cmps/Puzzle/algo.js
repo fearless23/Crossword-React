@@ -63,12 +63,12 @@ const addWord = function (best, words, table) {
     for (let k = 0; k < word.length; k++) {
       table[bestI][bestJ + k] = word.charAt(k);
     }
-    words[index].orientation = "across";
+    words[index].orientation = 'across';
   } else {
     for (let k = 0; k < word.length; k++) {
       table[bestI + k][bestJ] = word.charAt(k);
     }
-    words[index].orientation = "down";
+    words[index].orientation = 'down';
   }
   // console.log(word + ", " + bestScore);
 };
@@ -77,8 +77,8 @@ const assignPositions = function (words) {
   let positions = {};
   for (let index in words) {
     let word = words[index];
-    if (word.orientation !== "none") {
-      let tempStr = word.starty + "," + word.startx;
+    if (word.orientation !== 'none') {
+      let tempStr = word.starty + ',' + word.startx;
       if (tempStr in positions) {
         word.position = positions[tempStr];
       } else {
@@ -107,9 +107,9 @@ const initTable = function (rows, cols) {
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       if (j === 0) {
-        table[i] = ["-"];
+        table[i] = ['-'];
       } else {
-        table[i][j] = "-";
+        table[i][j] = '-';
       }
     }
   }
@@ -118,34 +118,34 @@ const initTable = function (rows, cols) {
 };
 
 const isConflict = function (table, isVertical, character, i, j) {
-  if (character !== table[i][j] && table[i][j] !== "-") {
+  if (character !== table[i][j] && table[i][j] !== '-') {
     return true;
   } else if (
-    table[i][j] === "-" &&
+    table[i][j] === '-' &&
     !isVertical &&
     i + 1 in table &&
-    table[i + 1][j] !== "-"
+    table[i + 1][j] !== '-'
   ) {
     return true;
   } else if (
-    table[i][j] === "-" &&
+    table[i][j] === '-' &&
     !isVertical &&
     i - 1 in table &&
-    table[i - 1][j] !== "-"
+    table[i - 1][j] !== '-'
   ) {
     return true;
   } else if (
-    table[i][j] === "-" &&
+    table[i][j] === '-' &&
     isVertical &&
     j + 1 in table[i] &&
-    table[i][j + 1] !== "-"
+    table[i][j + 1] !== '-'
   ) {
     return true;
   } else if (
-    table[i][j] === "-" &&
+    table[i][j] === '-' &&
     isVertical &&
     j - 1 in table[i] &&
-    table[i][j - 1] !== "-"
+    table[i][j - 1] !== '-'
   ) {
     return true;
   } else {
@@ -180,7 +180,7 @@ const attemptToInsert = function (
         if (isConflict(table, false, word.charAt(k), i, j + k)) {
           isValid = false;
           break;
-        } else if (table[i][j + k] === "-") {
+        } else if (table[i][j + k] === '-') {
           prevFlag = false;
           atleastOne = true;
         } else {
@@ -194,11 +194,11 @@ const attemptToInsert = function (
         }
       }
 
-      if (j - 1 in table[i] && table[i][j - 1] !== "-") {
+      if (j - 1 in table[i] && table[i][j - 1] !== '-') {
         isValid = false;
       } else if (
         j + word.length in table[i] &&
-        table[i][j + word.length] !== "-"
+        table[i][j + word.length] !== '-'
       ) {
         isValid = false;
       }
@@ -243,7 +243,7 @@ const attemptToInsert = function (
         if (isConflict(table, true, word.charAt(k), i + k, j)) {
           isValid = false;
           break;
-        } else if (table[i + k][j] === "-") {
+        } else if (table[i + k][j] === '-') {
           prevFlag = false;
           atleastOne = true;
         } else {
@@ -257,11 +257,11 @@ const attemptToInsert = function (
         }
       }
 
-      if (i - 1 in table && table[i - 1][j] !== "-") {
+      if (i - 1 in table && table[i - 1][j] !== '-') {
         isValid = false;
       } else if (
         i + word.length in table &&
-        table[i + word.length][j] !== "-"
+        table[i + word.length][j] !== '-'
       ) {
         isValid = false;
       }
@@ -308,7 +308,7 @@ const generateTable = function (table, rows, cols, words, weights) {
   for (let i = 0; i < xx.length; i++) {
     let best = [-1];
     for (let innerIndex in words) {
-      if ("answer" in words[innerIndex] && !("startx" in words[innerIndex])) {
+      if ('answer' in words[innerIndex] && !('startx' in words[innerIndex])) {
         let temp = attemptToInsert(
           rows,
           cols,
@@ -337,8 +337,8 @@ const generateTable = function (table, rows, cols, words, weights) {
   }
 
   for (let index in words) {
-    if (!("startx" in words[index])) {
-      words[index].orientation = "none";
+    if (!('startx' in words[index])) {
+      words[index].orientation = 'none';
     }
   }
 
@@ -355,24 +355,24 @@ const removeIsolatedWords = function (data) {
   // Draw intersections as "X"'s
   for (let wordIndex in words) {
     let word = words[wordIndex];
-    if (word.orientation === "across") {
+    if (word.orientation === 'across') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
-        if (newTable[i][j + k] === "-") {
-          newTable[i][j + k] = "O";
-        } else if (newTable[i][j + k] === "O") {
-          newTable[i][j + k] = "X";
+        if (newTable[i][j + k] === '-') {
+          newTable[i][j + k] = 'O';
+        } else if (newTable[i][j + k] === 'O') {
+          newTable[i][j + k] = 'X';
         }
       }
-    } else if (word.orientation === "down") {
+    } else if (word.orientation === 'down') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
-        if (newTable[i + k][j] === "-") {
-          newTable[i + k][j] = "O";
-        } else if (newTable[i + k][j] === "O") {
-          newTable[i + k][j] = "X";
+        if (newTable[i + k][j] === '-') {
+          newTable[i + k][j] = 'O';
+        } else if (newTable[i + k][j] === 'O') {
+          newTable[i + k][j] = 'X';
         }
       }
     }
@@ -382,30 +382,30 @@ const removeIsolatedWords = function (data) {
   for (let wordIndex in words) {
     let word = words[wordIndex];
     let isIsolated = true;
-    if (word.orientation === "across") {
+    if (word.orientation === 'across') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
-        if (newTable[i][j + k] === "X") {
+        if (newTable[i][j + k] === 'X') {
           isIsolated = false;
           break;
         }
       }
-    } else if (word.orientation === "down") {
+    } else if (word.orientation === 'down') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
-        if (newTable[i + k][j] === "X") {
+        if (newTable[i + k][j] === 'X') {
           isIsolated = false;
           break;
         }
       }
     }
-    if (word.orientation !== "none" && isIsolated) {
+    if (word.orientation !== 'none' && isIsolated) {
       delete words[wordIndex].startx;
       delete words[wordIndex].starty;
       delete words[wordIndex].position;
-      words[wordIndex].orientation = "none";
+      words[wordIndex].orientation = 'none';
     }
   }
 
@@ -413,13 +413,13 @@ const removeIsolatedWords = function (data) {
   newTable = initTable(rows, cols);
   for (let wordIndex in words) {
     let word = words[wordIndex];
-    if (word.orientation === "across") {
+    if (word.orientation === 'across') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
         newTable[i][j + k] = word.answer.charAt(k);
       }
-    } else if (word.orientation === "down") {
+    } else if (word.orientation === 'down') {
       let i = word.starty - 1;
       let j = word.startx - 1;
       for (let k = 0; k < word.answer.length; k++) {
@@ -443,7 +443,7 @@ const trimTable = function (data) {
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      if (table[i][j] !== "-") {
+      if (table[i][j] !== '-') {
         let x = j;
         let y = i;
 
@@ -475,7 +475,7 @@ const trimTable = function (data) {
 
   let words = data.result;
   for (let entry in words) {
-    if ("startx" in words[entry]) {
+    if ('startx' in words[entry]) {
       words[entry].startx -= leftMost;
       words[entry].starty -= topMost;
     }
